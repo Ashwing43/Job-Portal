@@ -24,21 +24,27 @@ public class RecruiterController {
         return recruiterService.getAllRecruiters();
     }
 
+    @GetMapping("/id/{myId}")
+    public Recruiter getRecruiterById(@PathVariable ObjectId myId) {
+        return recruiterService.getRecruiterById(myId);
+    }
     @PostMapping
     public boolean saveRecruiter(@RequestBody Recruiter recruiter){
         recruiterService.saveRecruiter(recruiter);
         return true;
     }
 
-    @PostMapping("/job/{myId}")
+    @PostMapping("/job/id/{myId}")
     public boolean saveJobEntry(@RequestBody Job job, @PathVariable ObjectId myId){
         Recruiter recruiter = recruiterService.getRecruiterById(myId);
         job.setRecruiterId(recruiter);
         jobService.saveJob(job);
+        recruiter.getRequirementOfRecruiter().add(job);
+        recruiterService.saveRecruiter(recruiter);
         return true;
     }
 
-    @GetMapping("/job/{myId}")
+    @GetMapping("/job/id/{myId}")
     public  List<Job> getJobByRecruiter(@PathVariable ObjectId myId){
         Recruiter recruiter = recruiterService.getRecruiterById(myId);
         return recruiter.getRequirementOfRecruiter();
