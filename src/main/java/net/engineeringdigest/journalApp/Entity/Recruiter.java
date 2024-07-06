@@ -1,5 +1,6 @@
 package net.engineeringdigest.journalApp.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
@@ -21,6 +22,7 @@ public class Recruiter {
     private String email;
     private String password;
     private String companyName;
-    @DBRef
+    @DBRef(lazy = true)
+    @JsonManagedReference
     private List<Job> requirementOfRecruiter = new ArrayList<>();
 }

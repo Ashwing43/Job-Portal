@@ -15,17 +15,17 @@ public class RecruiterService {
     @Autowired
     private RecruiterRepository recruiterRepository;
 
-    @GetMapping
     public List<Recruiter> getAllRecruiters(){
         return recruiterRepository.findAll();
     }
 
-    @PostMapping
     public void saveRecruiter(@RequestBody Recruiter recruiter){
         recruiterRepository.save(recruiter);
     }
 
     public Recruiter getRecruiterById(ObjectId myId) {
-        return recruiterRepository.findRecruiterById(myId);
+//        return recruiterRepository.findRecruiterById(myId);
+        return recruiterRepository.findById(myId).orElse(null);
+
     }
 }

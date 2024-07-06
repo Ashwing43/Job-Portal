@@ -8,6 +8,8 @@ import net.engineeringdigest.journalApp.Service.JobService;
 import net.engineeringdigest.journalApp.Service.RecruiterService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,9 +21,13 @@ public class RecruiterController {
     private RecruiterService recruiterService;
     @Autowired
     private JobService jobService;
-    @GetMapping
-    public List<Recruiter> getAllRecruiter(){
-        return recruiterService.getAllRecruiters();
+    @GetMapping("/all")
+    public ResponseEntity<List<Recruiter>> getAllRecruiter(){
+        List<Recruiter> recruiters = recruiterService.getAllRecruiters();
+        if(recruiters == null || recruiters.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(recruiters, HttpStatus.OK);
     }
 
     @GetMapping("/id/{myId}")
@@ -35,12 +41,8 @@ public class RecruiterController {
     }
 
     @PostMapping("/job/id/{myId}")
-    public boolean saveJobEntry(@RequestBody Job job, @PathVariable ObjectId myId){
-        Recruiter recruiter = recruiterService.getRecruiterById(myId);
-        job.setRecruiterId(recruiter);
-        jobService.saveJob(job);
-        recruiter.getRequirementOfRecruiter().add(job);
-        recruiterService.saveRecruiter(recruiter);
+    public boolean saveJobEntry(@RequestBody Job job, @PathVariable ObjectId myId) throws Exception {
+        jobService.saveJobByRecruiterId(job, myId);
         return true;
     }
 

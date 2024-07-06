@@ -1,5 +1,6 @@
 package net.engineeringdigest.journalApp.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,13 +20,14 @@ public class Job {
     @Id
     private ObjectId id;
     private String position;
-    private String Description;
+    private String description;
     private double compensationInLpa;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date dateOfJoining;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date dateOfPosting;
     @DBRef
+    @JsonBackReference
     private Recruiter recruiterId;
     @DBRef
     private List<Candidate> candidatesApplied = new ArrayList<>();
