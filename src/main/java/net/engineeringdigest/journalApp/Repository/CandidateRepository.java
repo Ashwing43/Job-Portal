@@ -6,4 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface CandidateRepository extends MongoRepository<Candidate, ObjectId> {
     Candidate findCandidateById(ObjectId id);
+    Candidate findCandidateByUsername(String username);
 }
