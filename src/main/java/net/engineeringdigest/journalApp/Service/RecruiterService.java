@@ -36,4 +36,8 @@ public class RecruiterService {
         return recruiterRepository.findById(myId).orElse(null);
 
     }
+
+    public void saveRecruiterWithJobs(Recruiter recruiter) {
+        recruiterRepository.save(recruiter);
+    }
 }

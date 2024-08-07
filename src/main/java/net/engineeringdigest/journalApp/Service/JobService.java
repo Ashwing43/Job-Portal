@@ -20,8 +20,8 @@ public class JobService {
     @Autowired
     private RecruiterService recruiterService;
 
-    public void saveJob(@RequestBody Job job){
-        jobRepository.save(job);
+    public Job saveJob(@RequestBody Job job){
+        return jobRepository.save(job);
     }
 
     @Transactional
