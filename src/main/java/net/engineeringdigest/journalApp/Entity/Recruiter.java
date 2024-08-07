@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,7 +18,8 @@ import java.util.List;
 public class Recruiter {
     @Id
     private ObjectId id;
-    private String name;
+    @Indexed(unique = true)
+    private String username;
     private String mobile;
     private String email;
     private String password;
@@ -25,4 +27,5 @@ public class Recruiter {
     @DBRef(lazy = true)
     @JsonManagedReference
     private List<Job> requirementOfRecruiter = new ArrayList<>();
+    private List<String> Roles = new ArrayList<>();
 }

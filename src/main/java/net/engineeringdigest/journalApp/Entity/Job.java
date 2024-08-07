@@ -2,6 +2,7 @@ package net.engineeringdigest.journalApp.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
@@ -16,6 +17,7 @@ import java.util.List;
 @Document(collection = "jobs")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Job {
     @Id
     private ObjectId id;

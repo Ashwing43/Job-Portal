@@ -10,6 +10,8 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +21,8 @@ import java.util.List;
 public class RecruiterController {
     @Autowired
     private RecruiterService recruiterService;
+    @Autowired
+    private RecruiterRepository recruiterRepository;
     @Autowired
     private JobService jobService;
     @GetMapping("/all")
@@ -34,9 +38,19 @@ public class RecruiterController {
     public Recruiter getRecruiterById(@PathVariable ObjectId myId) {
         return recruiterService.getRecruiterById(myId);
     }
-    @PostMapping
+    @PutMapping("/update")
     public boolean saveRecruiter(@RequestBody Recruiter recruiter){
-        recruiterService.saveRecruiter(recruiter);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        Recruiter recruiter1 = recruiterRepository.findRecruiterByUsername(name);
+        recruiter1.setPassword(recruiter.getPassword());
+        recruiter1.setUsername(recruiter.getUsername());
+        recruiter1.setMobile(recruiter.getMobile());
+        recruiter1.getRequirementOfRecruiter().addAll(recruiter.getRequirementOfRecruiter());
+        recruiter1.setCompanyName(recruiter.getCompanyName());
+        recruiter1.getRoles().addAll(recruiter.getRoles());
+        recruiter1.setEmail(recruiter.getEmail());
+        recruiterService.saveRecruiter(recruiter1);
         return true;
     }
 

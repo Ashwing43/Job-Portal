@@ -1,5 +1,6 @@
 package net.engineeringdigest.journalApp.Entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -8,18 +9,25 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Document(collection = "candidates")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Candidate {
     @Id
     private ObjectId id;
     @NonNull
-    private String name;
+    @Indexed(unique = true)
+    private String username;
     @NonNull
     private String mobile;
     @NonNull
@@ -35,4 +43,5 @@ public class Candidate {
     private List<String> skills = new ArrayList<>();
     @DBRef
     private List<Job> appliedRequirements = new ArrayList<>();
+    List<String> roles = new ArrayList<>();
 }
