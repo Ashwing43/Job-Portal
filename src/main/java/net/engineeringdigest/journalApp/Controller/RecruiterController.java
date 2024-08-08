@@ -1,5 +1,6 @@
 package net.engineeringdigest.journalApp.Controller;
 
+import com.mongodb.internal.operation.AbortTransactionOperation;
 import net.engineeringdigest.journalApp.Entity.Candidate;
 import net.engineeringdigest.journalApp.Entity.Job;
 import net.engineeringdigest.journalApp.Entity.Recruiter;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.AbstractUrlBasedView;
 
 import java.util.List;
 
@@ -26,9 +28,14 @@ public class RecruiterController {
     @Autowired
     private JobService jobService;
 
-    @GetMapping("/id/{myId}")
-    public Recruiter getRecruiterById(@PathVariable ObjectId myId) {
-        return recruiterService.getRecruiterById(myId);
+    @GetMapping
+    public ResponseEntity<?> getRecruiterById() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        Recruiter recruiter = recruiterService.findRecruiterByUsername(name);
+        if(recruiter != null)
+            return new ResponseEntity<>(recruiter, HttpStatus.FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     @PutMapping("/update")
     public boolean saveRecruiter(@RequestBody Recruiter recruiter){
@@ -52,9 +59,11 @@ public class RecruiterController {
         return true;
     }
 
-    @GetMapping("/job/id/{myId}")
-    public  List<Job> getJobByRecruiter(@PathVariable ObjectId myId){
-        Recruiter recruiter = recruiterService.getRecruiterById(myId);
+    @GetMapping("/jobs")
+    public  List<Job> jobsOfRecruiter(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        Recruiter recruiter = recruiterService.findRecruiterByUsername(name);
         return recruiter.getRequirementOfRecruiter();
     }
 

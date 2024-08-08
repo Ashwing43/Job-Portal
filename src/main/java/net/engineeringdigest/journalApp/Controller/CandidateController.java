@@ -17,6 +17,16 @@ public class CandidateController {
     @Autowired
     public CandidateService candidateService;
 
+    @GetMapping
+    public ResponseEntity<?> getCandidate(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        Candidate candidate = candidateService.findCandidateByUsername(name);
+        if(candidate != null)
+            return new ResponseEntity<>(candidate, HttpStatus.FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @PutMapping("/update")
     public ResponseEntity<?> updateCandidate(@RequestBody Candidate candidate){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
