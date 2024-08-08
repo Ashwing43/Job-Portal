@@ -25,14 +25,6 @@ public class RecruiterController {
     private RecruiterRepository recruiterRepository;
     @Autowired
     private JobService jobService;
-    @GetMapping("/all")
-    public ResponseEntity<List<Recruiter>> getAllRecruiter(){
-        List<Recruiter> recruiters = recruiterService.getAllRecruiters();
-        if(recruiters == null || recruiters.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(recruiters, HttpStatus.OK);
-    }
 
     @GetMapping("/id/{myId}")
     public Recruiter getRecruiterById(@PathVariable ObjectId myId) {
@@ -64,5 +56,14 @@ public class RecruiterController {
     public  List<Job> getJobByRecruiter(@PathVariable ObjectId myId){
         Recruiter recruiter = recruiterService.getRecruiterById(myId);
         return recruiter.getRequirementOfRecruiter();
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteRecruiter(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        Recruiter recruiter = recruiterService.findRecruiterByUsername(name);
+        recruiterService.deleteRecruiterById(recruiter.getId());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

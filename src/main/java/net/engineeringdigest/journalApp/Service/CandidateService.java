@@ -1,14 +1,16 @@
 package net.engineeringdigest.journalApp.Service;
 
 import net.engineeringdigest.journalApp.Entity.Candidate;
-//import net.engineeringdigest.journalApp.Entity.Recruiter;
+import net.engineeringdigest.journalApp.Entity.Job;
 import net.engineeringdigest.journalApp.Repository.CandidateRepository;
+import net.engineeringdigest.journalApp.Repository.JobRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Arrays;
@@ -18,6 +20,8 @@ import java.util.List;
 public class CandidateService {
     @Autowired
     private CandidateRepository candidateRepository;
+    @Autowired
+    private JobRepository jobRepository;
     public PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     public void saveCandidate(@RequestBody Candidate candidate) {
         candidate.setPassword(passwordEncoder.encode(candidate.getPassword()));
@@ -34,5 +38,14 @@ public class CandidateService {
 
     public Candidate findCandidateByUsername(String name) {
         return candidateRepository.findCandidateByUsername(name);
+    }
+
+    public void deleteCandidatebyId(ObjectId id){
+        Candidate candidate = candidateRepository.findCandidateById(id);
+        List<Job> list = candidate.getAppliedRequirements();
+        for(Job job : list){
+            jobRepository.delete(job);
+        }
+        candidateRepository.deleteById(id);
     }
 }

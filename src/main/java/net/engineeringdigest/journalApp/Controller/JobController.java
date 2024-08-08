@@ -21,7 +21,7 @@ public class JobController {
     private JobService jobService;
     @Autowired
     private RecruiterService recruiterService;
-     @PostMapping
+    @PostMapping
     void addJob(@RequestBody Job job){
          Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
          String name = authentication.getName();

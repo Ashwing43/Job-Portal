@@ -1,9 +1,7 @@
 package net.engineeringdigest.journalApp.Controller;
 
 import net.engineeringdigest.journalApp.Entity.Candidate;
-import net.engineeringdigest.journalApp.Repository.CandidateRepository;
 import net.engineeringdigest.journalApp.Service.CandidateService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,14 +11,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 @RestController
 @RequestMapping("/candidate")
 public class CandidateController {
     @Autowired
     public CandidateService candidateService;
-
-    public PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @PutMapping("/update")
     public ResponseEntity<?> updateCandidate(@RequestBody Candidate candidate){
@@ -40,5 +35,14 @@ public class CandidateController {
         candidate1.getRoles().addAll(candidate.getRoles());
         candidateService.saveCandidate(candidate1);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteCandidate(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        Candidate candidate1 = candidateService.findCandidateByUsername(name);
+        candidateService.deleteCandidatebyId(candidate1.getId());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
