@@ -1,4 +1,4 @@
-package net.engineeringdigest.journalApp.Entity;
+package net.engineeringdigest.jobPortal.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;

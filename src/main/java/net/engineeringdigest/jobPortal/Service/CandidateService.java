@@ -1,19 +1,17 @@
-package net.engineeringdigest.journalApp.Service;
+package net.engineeringdigest.jobPortal.Service;
 
-import net.engineeringdigest.journalApp.Entity.Candidate;
-import net.engineeringdigest.journalApp.Entity.Job;
-import net.engineeringdigest.journalApp.Repository.CandidateRepository;
-import net.engineeringdigest.journalApp.Repository.JobRepository;
+import net.engineeringdigest.jobPortal.Entity.Candidate;
+import net.engineeringdigest.jobPortal.Entity.Job;
+import net.engineeringdigest.jobPortal.Repository.CandidateRepository;
+import net.engineeringdigest.jobPortal.Repository.JobRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 @Component

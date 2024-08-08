@@ -1,9 +1,9 @@
-package net.engineeringdigest.journalApp.Controller;
+package net.engineeringdigest.jobPortal.Controller;
 
-import net.engineeringdigest.journalApp.Entity.Candidate;
-import net.engineeringdigest.journalApp.Entity.Recruiter;
-import net.engineeringdigest.journalApp.Service.CandidateService;
-import net.engineeringdigest.journalApp.Service.RecruiterService;
+import net.engineeringdigest.jobPortal.Entity.Candidate;
+import net.engineeringdigest.jobPortal.Entity.Recruiter;
+import net.engineeringdigest.jobPortal.Service.CandidateService;
+import net.engineeringdigest.jobPortal.Service.RecruiterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

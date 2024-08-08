@@ -1,9 +1,9 @@
-package net.engineeringdigest.journalApp.Service;
+package net.engineeringdigest.jobPortal.Service;
 
-import net.engineeringdigest.journalApp.Entity.Candidate;
-import net.engineeringdigest.journalApp.Entity.Recruiter;
-import net.engineeringdigest.journalApp.Repository.CandidateRepository;
-import net.engineeringdigest.journalApp.Repository.RecruiterRepository;
+import net.engineeringdigest.jobPortal.Entity.Candidate;
+import net.engineeringdigest.jobPortal.Entity.Recruiter;
+import net.engineeringdigest.jobPortal.Repository.CandidateRepository;
+import net.engineeringdigest.jobPortal.Repository.RecruiterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

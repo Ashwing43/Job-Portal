@@ -1,16 +1,14 @@
-package net.engineeringdigest.journalApp.Controller;
+package net.engineeringdigest.jobPortal.Controller;
 
-import net.engineeringdigest.journalApp.Entity.Job;
-import net.engineeringdigest.journalApp.Entity.Recruiter;
-import net.engineeringdigest.journalApp.Repository.RecruiterRepository;
-import net.engineeringdigest.journalApp.Service.JobService;
-import net.engineeringdigest.journalApp.Service.RecruiterService;
+import net.engineeringdigest.jobPortal.Entity.Job;
+import net.engineeringdigest.jobPortal.Entity.Recruiter;
+import net.engineeringdigest.jobPortal.Repository.RecruiterRepository;
+import net.engineeringdigest.jobPortal.Service.JobService;
+import net.engineeringdigest.jobPortal.Service.RecruiterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.Date;
 
 @RestController
 @RequestMapping("/job")

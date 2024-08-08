@@ -1,6 +1,6 @@
-package net.engineeringdigest.journalApp.Repository;
+package net.engineeringdigest.jobPortal.Repository;
 
-import net.engineeringdigest.journalApp.Entity.Recruiter;
+import net.engineeringdigest.jobPortal.Entity.Recruiter;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
