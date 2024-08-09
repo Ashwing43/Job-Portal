@@ -26,6 +26,6 @@ public class Recruiter {
     private String companyName;
     @DBRef(lazy = true)
     @JsonManagedReference
-    private List<Job> requirementOfRecruiter = new ArrayList<>();
+    private List<Job> jobList = new ArrayList<>();
     private List<String> Roles = new ArrayList<>();
 }

@@ -28,7 +28,7 @@ public class JobService {
             Recruiter recruiter = recruiterService.getRecruiterById(id);
             job.setRecruiterId(recruiter);
             jobRepository.save(job);
-            recruiter.getRequirementOfRecruiter().add(job);
+            recruiter.getJobList().add(job);
             recruiterService.saveRecruiter(recruiter);
         }catch(Exception e){
             throw new Exception("Something went wrong", e);
@@ -36,5 +36,8 @@ public class JobService {
     }
     public List<Job> getAllJobs(){
         return jobRepository.findAll();
+    }
+    public void deleteJobById(ObjectId id){
+        jobRepository.deleteById(id);
     }
 }

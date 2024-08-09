@@ -40,7 +40,7 @@ public class CandidateService {
 
     public void deleteCandidatebyId(ObjectId id){
         Candidate candidate = candidateRepository.findCandidateById(id);
-        List<Job> list = candidate.getAppliedRequirements();
+        List<Job> list = candidate.getAppliedJobs();
         for(Job job : list){
             jobRepository.delete(job);
         }

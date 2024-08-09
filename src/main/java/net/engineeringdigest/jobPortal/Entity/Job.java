@@ -32,5 +32,6 @@ public class Job {
     @JsonBackReference
     private Recruiter recruiterId;
     @DBRef
-    private List<Candidate> candidatesApplied = new ArrayList<>();
+    private List<Candidate> applicants = new ArrayList<>();
+    private boolean status = true;
 }

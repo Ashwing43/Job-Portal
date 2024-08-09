@@ -37,6 +37,6 @@ public class Candidate {
     private String linkedIn;
     private List<String> skills = new ArrayList<>();
     @DBRef
-    private List<Job> appliedRequirements = new ArrayList<>();
+    private List<Job> appliedJobs = new ArrayList<>();
     List<String> roles = new ArrayList<>();
 }

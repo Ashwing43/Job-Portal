@@ -27,7 +27,7 @@ public class JobController {
          job.setRecruiterId(recruiter);
          job.setDateOfPosting(new java.util.Date());
          Job job1 = jobService.saveJob(job);
-         recruiter.getRequirementOfRecruiter().add(job1);
+         recruiter.getJobList().add(job1);
          recruiterService.saveRecruiterWithJobs(recruiter);
      }
 }

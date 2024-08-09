@@ -50,7 +50,7 @@ public class RecruiterService {
     public void deleteRecruiterById(ObjectId id) {
         Optional<Recruiter> r = recruiterRepository.findById(id);
         Recruiter recruiter = r.get();
-        List<Job> list = recruiter.getRequirementOfRecruiter();
+        List<Job> list = recruiter.getJobList();
         for(Job j : list){
             jobRepository.delete(j);
         }

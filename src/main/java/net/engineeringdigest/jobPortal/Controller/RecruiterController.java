@@ -11,9 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/recruiter")
@@ -42,7 +44,7 @@ public class RecruiterController {
         recruiter1.setPassword(recruiter.getPassword());
         recruiter1.setUsername(recruiter.getUsername());
         recruiter1.setMobile(recruiter.getMobile());
-        recruiter1.getRequirementOfRecruiter().addAll(recruiter.getRequirementOfRecruiter());
+        recruiter1.getJobList().addAll(recruiter.getJobList());
         recruiter1.setCompanyName(recruiter.getCompanyName());
         recruiter1.getRoles().addAll(recruiter.getRoles());
         recruiter1.setEmail(recruiter.getEmail());
@@ -61,7 +63,7 @@ public class RecruiterController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
         Recruiter recruiter = recruiterService.findRecruiterByUsername(name);
-        return recruiter.getRequirementOfRecruiter();
+        return recruiter.getJobList();
     }
 
     @DeleteMapping
@@ -71,5 +73,24 @@ public class RecruiterController {
         Recruiter recruiter = recruiterService.findRecruiterByUsername(name);
         recruiterService.deleteRecruiterById(recruiter.getId());
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @DeleteMapping("/delete-job/id/{jobId}")
+    public ResponseEntity<?> deleteJobById(@PathVariable ObjectId jobId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        Recruiter recruiter = recruiterService.findRecruiterByUsername(name);
+        if (recruiter != null) {
+            boolean removed = recruiter.getJobList().removeIf(job -> job.getId().equals(jobId));
+            if (removed) {
+                jobService.deleteJobById(jobId);
+                recruiterRepository.save(recruiter);
+                return ResponseEntity.ok("Job removed successfully.");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Job not found in the recruiter's job list.");
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recruiter not found.");
+        }
+
     }
 }
